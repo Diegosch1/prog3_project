@@ -40,8 +40,9 @@ public class SubjectController {
     }
 
     @PutMapping("/editSubject/{code}")
-    public ResponseEntity<Object> editNormalPerson(@PathVariable String code, @RequestBody Subject updatedSubject) {
+    public ResponseEntity<Object> editSubject(@PathVariable String code, @RequestBody Subject updatedSubject) {
         try {
+            Subject.isValidSubject(updatedSubject);
             Subject targetSubject = subjectService.getSubjectByCode(code);
 
             targetSubject.setName(updatedSubject.getName());
