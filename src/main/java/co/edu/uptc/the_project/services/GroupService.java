@@ -37,14 +37,28 @@ public class GroupService {
     }
 
     @PostConstruct
-    public void addtestObjects() {
+    public void addDefaultObjects() {
         subjectService.addSubject(new Subject("matematicas", "math"));
         subjectService.addSubject(new Subject("naturales", "nat"));
-        placeService.addPlace(new Place("A", "building a", "behind u"));
+
+        placeService.addPlace(new Place("A", "building A", "behind u"));
         placeService.addPlace(new Place("R", "building R", "behind them"));
+        placeService.addPlace(new Place("C", "building C", "behind me"));
+
         UptcList<String> schedules = new UptcList<>();
         schedules.add("monday, 2:00 - 4:00");
         groupList.add(new Group("01", "math", "A", schedules));
+
+        UptcList<String> schedules1 = new UptcList<>();
+        schedules1.add("monday, 2:00 - 4:00");
+        schedules1.add("tuesday, 4:00 - 6:00");
+        groupList.add(new Group("02", "math", "A", schedules1));
+
+        UptcList<String> schedules2 = new UptcList<>();
+        schedules2.add("monday, 2:00 - 4:00");
+        schedules2.add("tuesday, 4:00 - 6:00");
+        schedules2.add("wednesday, 6:00 - 8:00");
+        groupList.add(new Group("03", "nat", "R", schedules2));
     }
 
     public void validateSubjectAndPlaceExists(String subjectCode, String placeId) throws ProjectExeption{
