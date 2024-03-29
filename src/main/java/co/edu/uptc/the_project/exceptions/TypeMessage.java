@@ -7,7 +7,7 @@ public enum TypeMessage {
     NOT_SAVED(HttpStatus.BAD_REQUEST.value(), "Not Saved", 410),
     INFORMATION_INCOMPLETE(HttpStatus.BAD_REQUEST.value(), "Infomration Incomplete", 430),
     NOT_FOUND_FILE(HttpStatus.BAD_REQUEST.value(), "Not Found file", 420),
-    SAVE(HttpStatus.OK.value(), "Saved", 210);
+    SAVED(HttpStatus.OK.value(), "Saved", 210);
 
     public final String message;
     public final int code;

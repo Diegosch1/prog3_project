@@ -1,5 +1,6 @@
 package co.edu.uptc.the_project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +20,9 @@ import co.edu.uptc.the_project.services.PlaceService;
 @RestController
 @RequestMapping("/places")
 public class PlaceController {
-    PlaceService placeService = new PlaceService();
+
+    @Autowired
+    private PlaceService placeService;
 
     @GetMapping()
     public UptcList<Place> getPlaces() {
@@ -27,7 +30,7 @@ public class PlaceController {
         return placesAux;
     }
 
-    @PostMapping("/addPlace")
+    @PostMapping("/add")
     public ResponseEntity<Object> addPlace(@RequestBody Place place) {
         try {
             Place.isValidPlace(place);
@@ -39,14 +42,14 @@ public class PlaceController {
         }
     }
 
-    @PutMapping("/editPlace/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Object> editPlace(@PathVariable String id, @RequestBody Place updatedPlace) {
         try {
             Place.isValidPlace(updatedPlace);
             Place targetPlace = placeService.getPlaceById(id);
 
-            targetPlace.setId(updatedPlace.getId());
             targetPlace.setName(updatedPlace.getName());
+            targetPlace.setLocation(updatedPlace.getLocation());
 
             return ResponseEntity.status(HttpStatus.OK).body(targetPlace);
         } catch (ProjectExeption e) {
@@ -54,7 +57,7 @@ public class PlaceController {
         }
     }
 
-    @DeleteMapping("/deletePlace/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deletePlace(@PathVariable String id) {
         try {
             Place targetPlace = placeService.getPlaceById(id);

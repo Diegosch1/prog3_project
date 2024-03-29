@@ -1,9 +1,13 @@
 package co.edu.uptc.the_project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +22,8 @@ import co.edu.uptc.the_project.services.GroupService;
 @RequestMapping("/groups")
 public class GroupController {
 
-    GroupService groupService = new GroupService();
+    @Autowired
+    private GroupService groupService;
 
     @GetMapping()
     public UptcList<Group> getPlaces() {
@@ -26,10 +31,9 @@ public class GroupController {
         return groupsAux;
     }
 
-    @PostMapping("/addGroup")
+    @PostMapping("/add")
     public ResponseEntity<Object> addGroup(@RequestBody GroupDto group) {
-        try {
-
+        try { 
             GroupDto.isValidGroup(group);
             groupService.gruopIdIsUnique(group.getGroupId());
             groupService.placeIsExclusive(group.getPlaceId());
@@ -43,6 +47,39 @@ public class GroupController {
             groupService.addGroup(finalGroup);
             
             return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (ProjectExeption e) {
+            return ResponseEntity.status(e.getMenssage().getCodeHttp()).body(e.getMenssage());
+        }
+    }
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Object> editGroup(@PathVariable String id, @RequestBody GroupDto updatedGroup) {
+        try {
+            GroupDto.isValidGroup(updatedGroup);
+            
+            Group targetGroup = groupService.getGroupById(id);
+
+            groupService.validateSubjectAndPlaceExists(updatedGroup.getSubjectCode(), updatedGroup.getPlaceId());
+
+            targetGroup.setSubjectCode(updatedGroup.getSubjectCode());
+            targetGroup.setPlaceId(updatedGroup.getPlaceId());
+
+            UptcList<String> schedulesAux = updatedGroup.turnSchedulesToStrings(updatedGroup.getSchedules());
+            
+            groupService.schedulesAreValid(updatedGroup.getSchedules());
+
+            targetGroup.setSchedules(schedulesAux);
+
+            return ResponseEntity.status(HttpStatus.OK).body(targetGroup);
+        } catch (ProjectExeption e) {
+            return ResponseEntity.status(e.getMenssage().getCodeHttp()).body(e.getMenssage());
+        }
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deleteGroup(@PathVariable String id) {
+        try {
+            Group targetGroup = groupService.getGroupById(id);
+            groupService.deleteGroup(targetGroup);
+            return ResponseEntity.status(HttpStatus.OK).body(targetGroup);
         } catch (ProjectExeption e) {
             return ResponseEntity.status(e.getMenssage().getCodeHttp()).body(e.getMenssage());
         }

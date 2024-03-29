@@ -1,12 +1,17 @@
 package co.edu.uptc.the_project.services;
 
+import org.springframework.stereotype.Service;
+
 import co.edu.uptc.ejercicio1.models.UptcList;
 import co.edu.uptc.the_project.exceptions.ProjectExeption;
 import co.edu.uptc.the_project.exceptions.TypeMessage;
 import co.edu.uptc.the_project.model.Subject;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
+@Service
 public class SubjectService {
     private UptcList<Subject> subjectsList = new UptcList<>();
 
@@ -33,5 +38,18 @@ public class SubjectService {
             }
         }
         throw new ProjectExeption(TypeMessage.NOT_FOUND);
+    }
+
+    public void subjectExists(String code) throws ProjectExeption {
+        boolean found = false;
+        for (Subject subject : this.subjectsList) {
+            if (subject.getCode().equals(code)) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            throw new ProjectExeption(TypeMessage.NOT_FOUND);
+        }
     }
 }

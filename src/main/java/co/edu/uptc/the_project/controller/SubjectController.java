@@ -1,5 +1,6 @@
 package co.edu.uptc.the_project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +20,9 @@ import co.edu.uptc.the_project.services.SubjectService;
 @RestController
 @RequestMapping("/subjects")
 public class SubjectController {
-    SubjectService subjectService = new SubjectService();
+
+    @Autowired
+    private SubjectService subjectService;
 
     @GetMapping()
     public UptcList<Subject> getSubjects() {
@@ -27,7 +30,7 @@ public class SubjectController {
         return subjectsAux;
     }
 
-    @PostMapping("/addSubject")
+    @PostMapping("/add")
     public ResponseEntity<Object> addSubject(@RequestBody Subject subject) {
         try {
             Subject.isValidSubject(subject);
@@ -39,14 +42,13 @@ public class SubjectController {
         }
     }
 
-    @PutMapping("/editSubject/{code}")
+    @PutMapping("/edit/{code}")
     public ResponseEntity<Object> editSubject(@PathVariable String code, @RequestBody Subject updatedSubject) {
         try {
             Subject.isValidSubject(updatedSubject);
             Subject targetSubject = subjectService.getSubjectByCode(code);
 
             targetSubject.setName(updatedSubject.getName());
-            targetSubject.setCode(updatedSubject.getCode());
 
             return ResponseEntity.status(HttpStatus.OK).body(targetSubject);
         } catch (ProjectExeption e) {
@@ -54,11 +56,11 @@ public class SubjectController {
         }
     }
 
-    @DeleteMapping("/deleteSubject/{code}")
+    @DeleteMapping("/delete/{code}")
     public ResponseEntity<Object> deleteSubject(@PathVariable String code) {
         try {
             Subject targetSubject = subjectService.getSubjectByCode(code);
-            subjectService.deleteSubject(targetSubject);            
+            subjectService.deleteSubject(targetSubject);
             return ResponseEntity.status(HttpStatus.OK).body(targetSubject);
         } catch (ProjectExeption e) {
             return ResponseEntity.status(e.getMenssage().getCodeHttp()).body(e.getMenssage());

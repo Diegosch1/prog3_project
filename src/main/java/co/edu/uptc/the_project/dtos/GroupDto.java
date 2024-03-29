@@ -25,9 +25,11 @@ public class GroupDto {
     }
 
     public static void isValidGroup(GroupDto group) throws ProjectExeption {
+
         if (group == null || group.getGroupId() == null || group.getSubjectCode() == null || group.getPlaceId() == null
                 || group.getSchedules() == null || group.getSchedules().size() < 1 || group.getSchedules().size() > 3) {
             throw new ProjectExeption(TypeMessage.INFORMATION_INCOMPLETE);
         }
+
     }
 }
