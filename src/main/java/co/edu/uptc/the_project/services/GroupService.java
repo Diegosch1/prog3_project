@@ -3,7 +3,7 @@ package co.edu.uptc.the_project.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.edu.uptc.ejercicio1.models.UptcList;
+import co.edu.uptc.UptcList.models.UptcList;
 import co.edu.uptc.the_project.exceptions.ProjectExeption;
 import co.edu.uptc.the_project.exceptions.TypeMessage;
 import co.edu.uptc.the_project.model.Group;

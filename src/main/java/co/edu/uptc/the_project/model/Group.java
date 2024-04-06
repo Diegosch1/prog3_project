@@ -1,6 +1,6 @@
 package co.edu.uptc.the_project.model;
 
-import co.edu.uptc.ejercicio1.models.UptcList;
+import co.edu.uptc.UptcList.models.UptcList;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

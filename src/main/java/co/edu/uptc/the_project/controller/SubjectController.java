@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.uptc.ejercicio1.models.UptcList;
+import co.edu.uptc.UptcList.models.UptcList;
 import co.edu.uptc.the_project.exceptions.ProjectExeption;
 import co.edu.uptc.the_project.model.Subject;
 import co.edu.uptc.the_project.services.SubjectService;

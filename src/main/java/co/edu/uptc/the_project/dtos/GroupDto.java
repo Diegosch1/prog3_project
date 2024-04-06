@@ -1,6 +1,6 @@
 package co.edu.uptc.the_project.dtos;
 
-import co.edu.uptc.ejercicio1.models.UptcList;
+import co.edu.uptc.UptcList.models.UptcList;
 import co.edu.uptc.the_project.exceptions.ProjectExeption;
 import co.edu.uptc.the_project.exceptions.TypeMessage;
 import co.edu.uptc.the_project.model.Schedule;
