@@ -43,8 +43,8 @@
         </dependency>
 		<dependency>
 			<groupId>co.edu.uptc</groupId>
-			<artifactId>diegoschi</artifactId>
-			<version>1.1</version>                      
+			<artifactId>UptcList</artifactId>
+			<version>1.2</version>                      
 		</dependency>
 	</dependencies>
 	

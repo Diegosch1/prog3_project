@@ -49,4 +49,14 @@ public class QueryController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMenssage());
         }
     }
+
+    @GetMapping("/coincidence/{coincidence}")
+    public ResponseEntity<Object> getSimilarSubjects(@PathVariable String coincidence) {
+        try {
+            UptcList<Subject> subjects = qService.getSubjectsByCoincidence(coincidence);
+            return ResponseEntity.ok(subjects);
+        } catch (ProjectExeption e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMenssage());
+        }
+    }
 }

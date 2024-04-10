@@ -94,4 +94,17 @@ public class QueryService {
         }
         return result;
     }
+    public UptcList<Subject> getSubjectsByCoincidence(String coincidence) throws ProjectExeption {
+        UptcList<Subject> result = new UptcList<>();
+        UptcList<String> coincidences = new UptcList<>();
+        UptcList<String> coincidencesList = new UptcList<>();
+        for (Subject subject : subjectsList) {
+            coincidences.add(subject.getName());            
+            coincidencesList = coincidences.getCoincidences(coincidence);
+        }
+        for (String test : coincidencesList) {
+            result.add(subjectService.getSubjectByName(test));
+        }
+        return result;
+    }
 }

@@ -40,6 +40,14 @@ public class GroupService {
     public void addDefaultObjects() {
         subjectService.addSubject(new Subject("matematicas", "math"));
         subjectService.addSubject(new Subject("naturales", "nat"));
+        subjectService.addSubject(new Subject("ciencias sociales", "soc"));
+        subjectService.addSubject(new Subject("literatura", "lit"));
+        subjectService.addSubject(new Subject("historia", "hist"));
+        subjectService.addSubject(new Subject("geografía", "geo"));
+        subjectService.addSubject(new Subject("física", "phy"));
+        subjectService.addSubject(new Subject("química", "chem"));
+        subjectService.addSubject(new Subject("educación física", "pe"));
+        subjectService.addSubject(new Subject("informática", "comp"));
 
         placeService.addPlace(new Place("A", "building A", "behind u"));
         placeService.addPlace(new Place("R", "building R", "behind them"));
@@ -61,13 +69,13 @@ public class GroupService {
         groupList.add(new Group("03", "nat", "R", schedules2));
     }
 
-    public void validateSubjectAndPlaceExists(String subjectCode, String placeId) throws ProjectExeption{
+    public void validateSubjectAndPlaceExists(String subjectCode, String placeId) throws ProjectExeption {
         subjectService.subjectExists(subjectCode);
         placeService.placeExists(placeId);
     }
 
     public void addGroup(Group group) throws ProjectExeption {
-        validateSubjectAndPlaceExists(group.getSubjectCode(),group.getPlaceId());
+        validateSubjectAndPlaceExists(group.getSubjectCode(), group.getPlaceId());
         groupList.add(group);
     }
 
@@ -127,8 +135,8 @@ public class GroupService {
 
     public Group getGroupById(String id) throws ProjectExeption {
         for (Group group : this.groupList) {
-            if(group.getGroupId().equals(id))
-            return group;
+            if (group.getGroupId().equals(id))
+                return group;
         }
         throw new ProjectExeption(TypeMessage.NOT_FOUND);
     }

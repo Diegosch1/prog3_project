@@ -23,6 +23,15 @@ public class SubjectService {
         subjectsList.remove(subject);
     }
 
+    public Subject getSubjectByName(String Name){
+        for (Subject subject : subjectsList) {
+            if (subject.getName().equals(Name)) {
+                return subject;
+            }
+        }
+        return null;
+    }
+
     public void codeIsRepeated(String code) throws ProjectExeption{
         for (Subject subject : this.subjectsList) {
             if (subject.getCode().equals(code)) {
